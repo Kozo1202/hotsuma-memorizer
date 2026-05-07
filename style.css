@@ -1,240 +1,250 @@
+もちろんや 👍
+今のUIは：
+
+* 文字デカめ
+* 余白広め
+* 結果欄高め
+
+やから、スマホでは縦長になっとる。
+
+次は：
+
+```text
+1画面完結型
+```
+
+へ最適化やな 👍
+
+---
+
+# やること
+
+## ① フォント少し小さく
+
+```css
+font-size: 22px;
+```
+
+くらい。
+
+---
+
+## ② textarea高さ縮小
+
+今：
+
+```css
+height: 420px;
+```
+
+↓
+
+```css
+height: 220px;
+```
+
+---
+
+## ③ 結果欄縮小
+
+```css
+min-height: 120px;
+```
+
+程度。
+
+---
+
+## ④ 余白縮小
+
+padding / margin を半分くらい。
+
+---
+
+## ⑤ スマホ最適化
+
+```css
+@media (max-width: 768px)
+```
+
+で切替。
+
+---
+
+# style.css 完全版
+
+これに差し替えてんか 👍
+
+```css
 body {
-
-  font-family:
-    "Noto Serif JP",
-    "Yu Mincho",
-    "Hiragino Mincho ProN",
-    "MS PMincho",
-    serif;
-
-  background:
-    linear-gradient(
-      to bottom,
-      #f7f1df,
-      #efe4c8
-    );
-
-  color: #1a1208;
-
-  margin: 24px;
-
-  line-height: 1.9;
+    font-family: "Noto Serif JP", serif;
+    background: #f8f3e9;
+    color: #222;
+    margin: 0;
+    padding: 12px;
 }
 
-/* タイトル */
+.container {
+    max-width: 900px;
+    margin: auto;
+}
 
 h1 {
-
-  font-size: 52px;
-
-  font-weight: 700;
-
-  letter-spacing: 0.08em;
-
-  color: #2c1700;
-
-  margin-bottom: 24px;
-
-  text-shadow:
-    1px 1px 0 #fff6dd;
+    font-size: 42px;
+    margin-bottom: 12px;
+    color: #2b1b0f;
 }
 
-/* 見出し */
-
-h2 {
-
-  font-size: 42px;
-
-  margin-top: 28px;
-
-  margin-bottom: 14px;
-
-  color: #2f1a00;
+select,
+button,
+textarea {
+    font-family: inherit;
 }
-
-/* プルダウン */
 
 select {
-
-  font-family: inherit;
-
-  font-size: 28px;
-
-  padding: 10px 14px;
-
-  border-radius: 8px;
-
-  border:
-    1px solid #8f7b5c;
-
-  background: #fffaf0;
-
-  color: #2a1700;
-
-  margin-bottom: 20px;
+    font-size: 20px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #999;
+    background: #fffdf7;
 }
-
-/* 入力欄 */
 
 textarea {
+    width: 100%;
+    height: 220px;
 
-  width: 100%;
+    font-size: 22px;
+    line-height: 1.8;
 
-  height: 420px;
+    padding: 14px;
+    box-sizing: border-box;
 
-  font-family: inherit;
+    border: 2px solid #5b4636;
+    border-radius: 10px;
 
-  font-size: 34px;
+    background: #fffdf8;
 
-  line-height: 2.0;
-
-  padding: 22px;
-
-  border:
-    2px solid #8c6c3f;
-
-  border-radius: 10px;
-
-  background:
-    #fffdf6;
-
-  color: #231200;
-
-  box-sizing: border-box;
-
-  resize: vertical;
-
-  box-shadow:
-    inset 0 0 12px rgba(80, 40, 0, 0.08);
-
-  margin-bottom: 20px;
+    resize: vertical;
 }
 
-/* 判定ボタン */
-
 button {
+    margin-top: 8px;
+    padding: 10px 18px;
 
-  font-family: inherit;
+    font-size: 20px;
 
-  font-size: 28px;
+    border: none;
+    border-radius: 8px;
 
-  padding:
-    14px 30px;
+    background: #5b4636;
+    color: white;
 
-  border-radius: 10px;
-
-  border:
-    1px solid #7a5d35;
-
-  background:
-    linear-gradient(
-      to bottom,
-      #f6ead0,
-      #dcc49a
-    );
-
-  color: #2a1400;
-
-  cursor: pointer;
-
-  margin-bottom: 24px;
-
-  box-shadow:
-    2px 2px 4px rgba(0,0,0,0.15);
+    cursor: pointer;
 }
 
 button:hover {
-
-  background:
-    linear-gradient(
-      to bottom,
-      #fff3d9,
-      #e6cfa8
-    );
+    background: #3e2f25;
 }
 
-/* 判定 */
+.status {
+    margin-top: 10px;
+    margin-bottom: 10px;
 
-#status {
-
-  font-size: 42px;
-
-  font-weight: bold;
-
-  margin-bottom: 24px;
+    font-size: 34px;
+    font-weight: bold;
 }
 
 .ok {
-
-  color: #006400;
-
-  background: #e7ffe7;
-
-  padding:
-    6px 14px;
-
-  border-radius: 6px;
+    color: #14833b;
 }
 
 .ng {
-
-  color: #c00000;
-
-  background: #ffe0e0;
-
-  padding:
-    6px 14px;
-
-  border-radius: 6px;
+    color: #c40000;
 }
 
-/* 結果表示 */
+.section-title {
+    font-size: 28px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
 
 .result {
+    background: rgba(255,252,245,0.92);
 
-  border:
-    1px solid #b8a27d;
+    padding: 14px;
 
-  background:
-    rgba(255,252,245,0.85);
+    font-size: 22px;
+    line-height: 1.8;
 
-  padding: 28px;
+    min-height: 120px;
 
-  font-size: 34px;
+    white-space: pre-wrap;
 
-  line-height: 2.0;
+    border-radius: 10px;
 
-  min-height: 220px;
-
-  white-space: pre-wrap;
-
-  border-radius: 10px;
-
-  box-shadow:
-    inset 0 0 8px rgba(80,40,0,0.08);
+    box-shadow:
+        inset 0 0 6px rgba(80,40,0,0.08);
 }
 
 /* 差異 */
 
 .diff {
+    color: #c00000;
 
-  color: #c00000;
+    background: #ffe0e0;
 
-  background: #ffe0e0;
+    font-weight: bold;
 
-  font-weight: bold;
+    padding: 0 2px;
 
-  padding:
-    0 2px;
-
-  border-radius: 4px;
+    border-radius: 4px;
 }
 
 /* 正解文字 */
 
 .correct-answer {
+    color: #14833b;
 
-  color: #0b7a0b;
-
-  font-weight: bold;
+    font-weight: bold;
 }
+
+/* スマホ最適化 */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 8px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    textarea {
+        height: 180px;
+
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .result {
+        font-size: 18px;
+        line-height: 1.6;
+
+        min-height: 80px;
+    }
+
+    .status {
+        font-size: 28px;
+    }
+
+    .section-title {
+        font-size: 22px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+```
