@@ -2,6 +2,7 @@ const ayaSelect = document.getElementById("ayaSelect");
 const inputText = document.getElementById("inputText");
 const checkButton = document.getElementById("checkButton");
 const status = document.getElementById("status");
+const positionInfo = document.getElementById("positionInfo");
 const userResult = document.getElementById("userResult");
 
 let targetLines = [];
@@ -64,6 +65,7 @@ async function loadAyaContent(fileName) {
 
   inputText.value = "";
   status.innerHTML = "";
+  positionInfo.innerHTML = "";
   userResult.innerHTML = "";
 
   inputText.focus();
@@ -95,7 +97,20 @@ inputText.addEventListener("keydown", (e) => {
 function compareText() {
   try {
     const userLines = inputText.value.trimEnd().split(/\r?\n/);
-    const correctLines = targetLines.slice(0, userLines.length);
+
+    if (userLines.length === 0 || inputText.value.trim() === "") {
+      status.innerHTML = `<span class="ng">入力が空です</span>`;
+      positionInfo.innerHTML = "";
+      userResult.innerHTML = "";
+      return;
+    }
+
+    const bestStartLine = findBestStartLine(userLines);
+
+    const correctLines = targetLines.slice(
+      bestStartLine,
+      bestStartLine + userLines.length
+    );
 
     const userJoined = normalizeForCompare(userLines.join("\n"));
     const correctJoined = normalizeForCompare(correctLines.join("\n"));
@@ -105,11 +120,36 @@ function compareText() {
         ? `<span class="ok">OK</span>`
         : `<span class="ng">差異あり</span>`;
 
+    positionInfo.innerHTML =
+      `判定位置：${bestStartLine + 1}行目から`;
+
     userResult.innerHTML =
       buildUserOnlyDiff(userJoined, correctJoined).replace(/\n/g, "<br>");
+
   } catch (error) {
     showError(error);
   }
+}
+
+function findBestStartLine(userLines) {
+  let bestIndex = 0;
+  let bestScore = Infinity;
+
+  const userText = normalizeForCompare(userLines.join("\n"));
+
+  for (let i = 0; i < targetLines.length; i++) {
+    const candidateLines = targetLines.slice(i, i + userLines.length);
+    const candidateText = normalizeForCompare(candidateLines.join("\n"));
+
+    const score = levenshteinDistance(userText, candidateText);
+
+    if (score < bestScore) {
+      bestScore = score;
+      bestIndex = i;
+    }
+  }
+
+  return bestIndex;
 }
 
 function normalizeForCompare(str) {
@@ -133,6 +173,34 @@ function buildUserOnlyDiff(user, correct) {
   }
 
   return html;
+}
+
+function levenshteinDistance(a, b) {
+  const m = a.length;
+  const n = b.length;
+
+  const dp = Array.from({ length: m + 1 }, () =>
+    Array(n + 1).fill(0)
+  );
+
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (a[i - 1] === b[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + 1
+        );
+      }
+    }
+  }
+
+  return dp[m][n];
 }
 
 function diffChars(correct, user) {

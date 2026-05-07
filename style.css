@@ -1,181 +1,190 @@
-もちろんや 👍
-今のUIは：
-
-* 文字デカめ
-* 余白広め
-* 結果欄高め
-
-やから、スマホでは縦長になっとる。
-
-次は：
-
-```text
-1画面完結型
-```
-
-へ最適化やな 👍
-
----
-
-# やること
-
-## ① フォント少し小さく
-
 ```css
-font-size: 22px;
-```
+/* =========================
+   全体
+========================= */
 
-くらい。
-
----
-
-## ② textarea高さ縮小
-
-今：
-
-```css
-height: 420px;
-```
-
-↓
-
-```css
-height: 220px;
-```
-
----
-
-## ③ 結果欄縮小
-
-```css
-min-height: 120px;
-```
-
-程度。
-
----
-
-## ④ 余白縮小
-
-padding / margin を半分くらい。
-
----
-
-## ⑤ スマホ最適化
-
-```css
-@media (max-width: 768px)
-```
-
-で切替。
-
----
-
-# style.css 完全版
-
-これに差し替えてんか 👍
-
-```css
 body {
-    font-family: "Noto Serif JP", serif;
-    background: #f8f3e9;
-    color: #222;
+    font-family:
+        "Noto Serif JP",
+        "Hiragino Mincho ProN",
+        "Yu Mincho",
+        serif;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #f5f0e1,
+            #efe4c8
+        );
+
+    color: #2f241b;
+
     margin: 0;
-    padding: 12px;
+
+    padding: 16px;
+
+    max-width: 900px;
+
+    margin-inline: auto;
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
-}
+/* =========================
+   タイトル
+========================= */
 
 h1 {
-    font-size: 42px;
+    font-size: 44px;
+
+    margin-top: 0;
+
     margin-bottom: 12px;
-    color: #2b1b0f;
+
+    color: #2c1c10;
+
+    letter-spacing: 2px;
 }
 
-select,
-button,
-textarea {
+/* =========================
+   セレクト
+========================= */
+
+select {
+    width: 100%;
+
+    padding: 10px;
+
+    margin-bottom: 10px;
+
+    font-size: 22px;
+
+    border-radius: 8px;
+
+    border: 1px solid #8b7355;
+
+    background: #fffdf7;
+
     font-family: inherit;
 }
 
-select {
-    font-size: 20px;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    border: 1px solid #999;
-    background: #fffdf7;
-}
+/* =========================
+   テキストエリア
+========================= */
 
 textarea {
     width: 100%;
+
     height: 220px;
 
-    font-size: 22px;
+    padding: 14px;
+
+    margin-bottom: 10px;
+
+    font-size: 30px;
+
     line-height: 1.8;
 
-    padding: 14px;
-    box-sizing: border-box;
-
-    border: 2px solid #5b4636;
     border-radius: 10px;
 
-    background: #fffdf8;
+    border: 2px solid #8b7355;
+
+    background: rgba(255,255,250,0.9);
+
+    box-sizing: border-box;
 
     resize: vertical;
+
+    font-family: inherit;
 }
 
-button {
-    margin-top: 8px;
-    padding: 10px 18px;
+/* =========================
+   ボタン
+========================= */
 
-    font-size: 20px;
+button {
+    padding: 12px 20px;
+
+    font-size: 24px;
 
     border: none;
-    border-radius: 8px;
 
-    background: #5b4636;
+    border-radius: 10px;
+
+    background: #6f4f28;
+
     color: white;
 
     cursor: pointer;
+
+    margin-bottom: 12px;
+
+    font-family: inherit;
+
+    transition: 0.2s;
 }
 
 button:hover {
-    background: #3e2f25;
+    background: #8a6332;
 }
 
-.status {
-    margin-top: 10px;
-    margin-bottom: 10px;
+/* =========================
+   状態表示
+========================= */
 
-    font-size: 34px;
+#status {
+    font-size: 40px;
+
     font-weight: bold;
+
+    margin-bottom: 10px;
 }
 
 .ok {
-    color: #14833b;
+    color: #0b7a0b;
 }
 
 .ng {
-    color: #c40000;
+    color: #c00000;
 }
 
-.section-title {
-    font-size: 28px;
-    margin-top: 12px;
+/* =========================
+   判定位置
+========================= */
+
+#positionInfo {
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+
+    color: #5b4636;
+}
+
+/* =========================
+   見出し
+========================= */
+
+h2 {
+    font-size: 34px;
+
+    margin-top: 8px;
+
     margin-bottom: 8px;
 }
 
+/* =========================
+   結果表示
+========================= */
+
 .result {
-    background: rgba(255,252,245,0.92);
+    background:
+        rgba(255,252,245,0.88);
 
-    padding: 14px;
+    padding: 18px;
 
-    font-size: 22px;
-    line-height: 1.8;
+    font-size: 30px;
+
+    line-height: 1.9;
 
     min-height: 120px;
 
@@ -187,7 +196,9 @@ button:hover {
         inset 0 0 6px rgba(80,40,0,0.08);
 }
 
-/* 差異 */
+/* =========================
+   差異
+========================= */
 
 .diff {
     color: #c00000;
@@ -201,50 +212,73 @@ button:hover {
     border-radius: 4px;
 }
 
-/* 正解文字 */
+/* =========================
+   正解文字
+========================= */
 
 .correct-answer {
-    color: #14833b;
+    color: #0b7a0b;
 
     font-weight: bold;
 }
 
-/* スマホ最適化 */
+/* =========================
+   モバイル最適化
+========================= */
 
 @media (max-width: 768px) {
 
     body {
-        padding: 8px;
+        padding: 10px;
     }
 
     h1 {
-        font-size: 28px;
+        font-size: 30px;
+    }
+
+    select {
+        font-size: 18px;
+        padding: 8px;
     }
 
     textarea {
-        height: 180px;
+        height: 160px;
 
         font-size: 18px;
-        line-height: 1.6;
-    }
 
-    .result {
-        font-size: 18px;
-        line-height: 1.6;
+        line-height: 1.5;
 
-        min-height: 80px;
-    }
-
-    .status {
-        font-size: 28px;
-    }
-
-    .section-title {
-        font-size: 22px;
+        padding: 10px;
     }
 
     button {
         width: 100%;
+
+        font-size: 20px;
+
+        padding: 10px;
+    }
+
+    #status {
+        font-size: 28px;
+    }
+
+    #positionInfo {
+        font-size: 16px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .result {
+        font-size: 18px;
+
+        line-height: 1.6;
+
+        min-height: 80px;
+
+        padding: 12px;
     }
 }
 ```
