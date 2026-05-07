@@ -1,0 +1,240 @@
+body {
+
+  font-family:
+    "Noto Serif JP",
+    "Yu Mincho",
+    "Hiragino Mincho ProN",
+    "MS PMincho",
+    serif;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #f7f1df,
+      #efe4c8
+    );
+
+  color: #1a1208;
+
+  margin: 24px;
+
+  line-height: 1.9;
+}
+
+/* タイトル */
+
+h1 {
+
+  font-size: 52px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  color: #2c1700;
+
+  margin-bottom: 24px;
+
+  text-shadow:
+    1px 1px 0 #fff6dd;
+}
+
+/* 見出し */
+
+h2 {
+
+  font-size: 42px;
+
+  margin-top: 28px;
+
+  margin-bottom: 14px;
+
+  color: #2f1a00;
+}
+
+/* プルダウン */
+
+select {
+
+  font-family: inherit;
+
+  font-size: 28px;
+
+  padding: 10px 14px;
+
+  border-radius: 8px;
+
+  border:
+    1px solid #8f7b5c;
+
+  background: #fffaf0;
+
+  color: #2a1700;
+
+  margin-bottom: 20px;
+}
+
+/* 入力欄 */
+
+textarea {
+
+  width: 100%;
+
+  height: 420px;
+
+  font-family: inherit;
+
+  font-size: 34px;
+
+  line-height: 2.0;
+
+  padding: 22px;
+
+  border:
+    2px solid #8c6c3f;
+
+  border-radius: 10px;
+
+  background:
+    #fffdf6;
+
+  color: #231200;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  box-shadow:
+    inset 0 0 12px rgba(80, 40, 0, 0.08);
+
+  margin-bottom: 20px;
+}
+
+/* 判定ボタン */
+
+button {
+
+  font-family: inherit;
+
+  font-size: 28px;
+
+  padding:
+    14px 30px;
+
+  border-radius: 10px;
+
+  border:
+    1px solid #7a5d35;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #f6ead0,
+      #dcc49a
+    );
+
+  color: #2a1400;
+
+  cursor: pointer;
+
+  margin-bottom: 24px;
+
+  box-shadow:
+    2px 2px 4px rgba(0,0,0,0.15);
+}
+
+button:hover {
+
+  background:
+    linear-gradient(
+      to bottom,
+      #fff3d9,
+      #e6cfa8
+    );
+}
+
+/* 判定 */
+
+#status {
+
+  font-size: 42px;
+
+  font-weight: bold;
+
+  margin-bottom: 24px;
+}
+
+.ok {
+
+  color: #006400;
+
+  background: #e7ffe7;
+
+  padding:
+    6px 14px;
+
+  border-radius: 6px;
+}
+
+.ng {
+
+  color: #c00000;
+
+  background: #ffe0e0;
+
+  padding:
+    6px 14px;
+
+  border-radius: 6px;
+}
+
+/* 結果表示 */
+
+.result {
+
+  border:
+    1px solid #b8a27d;
+
+  background:
+    rgba(255,252,245,0.85);
+
+  padding: 28px;
+
+  font-size: 34px;
+
+  line-height: 2.0;
+
+  min-height: 220px;
+
+  white-space: pre-wrap;
+
+  border-radius: 10px;
+
+  box-shadow:
+    inset 0 0 8px rgba(80,40,0,0.08);
+}
+
+/* 差異 */
+
+.diff {
+
+  color: #c00000;
+
+  background: #ffe0e0;
+
+  font-weight: bold;
+
+  padding:
+    0 2px;
+
+  border-radius: 4px;
+}
+
+/* 正解文字 */
+
+.correct-answer {
+
+  color: #0b7a0b;
+
+  font-weight: bold;
+}
