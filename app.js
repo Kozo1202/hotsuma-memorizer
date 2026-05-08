@@ -290,3 +290,45 @@ function showError(error) {
   status.innerHTML = `<span class="ng">エラー: ${escapeHtml(error.message)}</span>`;
   console.error(error);
 }
+
+// 縦書き・横書き切換
+const writingModeButton = document.getElementById("writingModeButton");
+const textArea = document.getElementById("textArea");
+
+// 前回状態を復元
+const savedWritingMode = localStorage.getItem("writingMode");
+
+if (savedWritingMode === "vertical") {
+  textArea.classList.remove("horizontal-mode");
+  textArea.classList.add("vertical-mode");
+  writingModeButton.textContent = "横書きにする";
+} else {
+  textArea.classList.remove("vertical-mode");
+  textArea.classList.add("horizontal-mode");
+  writingModeButton.textContent = "縦書きにする";
+}
+
+writingModeButton.addEventListener("click", () => {
+
+  const isVertical =
+    textArea.classList.contains("vertical-mode");
+
+  if (isVertical) {
+
+    textArea.classList.remove("vertical-mode");
+    textArea.classList.add("horizontal-mode");
+
+    writingModeButton.textContent = "縦書きにする";
+
+    localStorage.setItem("writingMode", "horizontal");
+
+  } else {
+
+    textArea.classList.remove("horizontal-mode");
+    textArea.classList.add("vertical-mode");
+
+    writingModeButton.textContent = "横書きにする";
+
+    localStorage.setItem("writingMode", "vertical");
+  }
+});
