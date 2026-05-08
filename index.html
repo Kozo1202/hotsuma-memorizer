@@ -1,58 +1,45 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>『ほつまつたゑ』暗唱支援システム</title>
+    <!-- タイトル -->
+    <title>『ほつまつたゑ』暗唱支援システム v1.0</title>
 
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#efe4c8">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest">
 
-  <link rel="icon" href="icons/hotsuma.svg" type="image/svg+xml">
+    <!-- アイコン -->
+    <link rel="icon" href="./icons/hotsuma-icon.png">
+    <link rel="apple-touch-icon" href="./icons/hotsuma-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap"
-    rel="stylesheet"
-  >
+    <!-- iPhone対応 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ほつま">
 
-  <link rel="stylesheet" href="style.css">
+    <!-- テーマカラー -->
+    <meta name="theme-color" content="#f5f0e6">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <h1>
-    『ほつまつたゑ』暗唱支援システム
-    <span class="version">Ver. 1.0</span>
-  </h1>
+    <div class="container">
 
-  <select id="ayaSelect"></select>
+        <h1>
+            『ほつまつたゑ』暗唱支援システム
+            <span class="version">v1.0</span>
+        </h1>
 
-  <textarea
-    id="inputText"
-    placeholder="ここに暗唱入力"
-  ></textarea>
+        <!-- ここから本文 -->
 
-  <button id="checkButton" type="button">判定する</button>
+    </div>
 
-  <div id="status"></div>
-  <div id="positionInfo"></div>
-
-  <h2>あなた</h2>
-
-  <div id="userResult" class="result"></div>
-
-  <script src="app.js"></script>
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./service-worker.js");
-      });
-    }
-  </script>
+    <script src="app.js"></script>
 
 </body>
 </html>

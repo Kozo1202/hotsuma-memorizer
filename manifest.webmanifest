@@ -1,0 +1,19 @@
+{
+  "name": "『ほつまつたゑ』暗唱支援システム",
+  "short_name": "ほつま暗唱",
+  "description": "『ほつまつたゑ』の暗唱を支援するPWAです。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#efe4c8",
+  "theme_color": "#8c6c3f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/hotsuma.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
