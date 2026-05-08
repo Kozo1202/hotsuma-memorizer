@@ -1,8 +1,10 @@
-const CACHE_NAME = 'woshite-offline-v2';
+const CACHE_NAME = 'woshite-offline-v6';
 
 const CACHE_FILES = [
   './',
   './index.html',
+  './style.css?v=5',
+  './app.js?v=5',
   './manifest.json',
   './service-worker.js',
 
@@ -62,6 +64,8 @@ const CACHE_FILES = [
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting();
+
   event.waitUntil(
     caches.open(CACHE_NAME).then(async cache => {
 
@@ -86,14 +90,26 @@ self.addEventListener('activate', event => {
           .filter(key => key !== CACHE_NAME)
           .map(key => caches.delete(key))
       );
+    }).then(() => {
+      return self.clients.claim();
     })
   );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then(response => {
+        const responseClone = response.clone();
+
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
+
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
