@@ -182,36 +182,6 @@ h2 {
 }
 
 /* =========================
-   横書き
-========================= */
-
-.horizontal-mode {
-    writing-mode: horizontal-tb;
-    text-orientation: mixed;
-    line-height: 1.8;
-    overflow-y: auto;
-}
-
-/* =========================
-   縦書き
-========================= */
-
-.vertical-mode {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-
-    line-height: 2;
-    letter-spacing: 0.08em;
-
-    height: 70vh;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    white-space: pre-wrap;
-}
-
-/* =========================
    モバイル最適化
 ========================= */
 
@@ -267,10 +237,6 @@ h2 {
         line-height: 1.6;
         min-height: 80px;
         padding: 12px;
-    }
-
-    .vertical-mode {
-        height: 60vh;
     }
 }
 ```
