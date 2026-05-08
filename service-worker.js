@@ -1,4 +1,4 @@
-const CACHE_NAME = 'woshite-offline-v1';
+const CACHE_NAME = 'woshite-offline-v2';
 
 const CACHE_FILES = [
   './',
