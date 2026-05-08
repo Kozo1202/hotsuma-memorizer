@@ -1,15 +1,28 @@
-const ayaSelect = document.getElementById("ayaSelect");
-const inputText = document.getElementById("inputText");
-const checkButton = document.getElementById("checkButton");
-const clearButton = document.getElementById("clearButton");
+const ayaSelect =
+    document.getElementById("ayaSelect");
 
-const status = document.getElementById("status");
-const positionInfo = document.getElementById("positionInfo");
-const userResult = document.getElementById("userResult");
+const inputText =
+    document.getElementById("inputText");
+
+const checkButton =
+    document.getElementById("checkButton");
+
+const clearButton =
+    document.getElementById("clearButton");
+
+const status =
+    document.getElementById("status");
+
+const positionInfo =
+    document.getElementById("positionInfo");
+
+const userResult =
+    document.getElementById("userResult");
 
 let targetLines = [];
 
 let enterCount = 0;
+
 let enterTimer = null;
 
 initialize();
@@ -338,10 +351,12 @@ function levenshteinDistance(a, b) {
         );
 
     for (let i = 0; i <= m; i++) {
+
         dp[i][0] = i;
     }
 
     for (let j = 0; j <= n; j++) {
+
         dp[0][j] = j;
     }
 
@@ -349,7 +364,10 @@ function levenshteinDistance(a, b) {
 
         for (let j = 1; j <= n; j++) {
 
-            if (a[i - 1] === b[j - 1]) {
+            if (
+                a[i - 1] ===
+                b[j - 1]
+            ) {
 
                 dp[i][j] =
                     dp[i - 1][j - 1];
@@ -371,153 +389,12 @@ function levenshteinDistance(a, b) {
 
 function diffChars(correct, user) {
 
-    const m = correct.length;
-
-    const n = user.length;
-
-    const dp =
-        Array.from(
-            { length: m + 1 },
-            () => Array(n + 1).fill(0)
-        );
-
-    for (let i = 0; i <= m; i++) {
-        dp[i][0] = i;
-    }
-
-    for (let j = 0; j <= n; j++) {
-        dp[0][j] = j;
-    }
-
-    for (let i = 1; i <= m; i++) {
-
-        for (let j = 1; j <= n; j++) {
-
-            if (
-                correct[i - 1] ===
-                user[j - 1]
-            ) {
-
-                dp[i][j] =
-                    dp[i - 1][j - 1];
-
-            } else {
-
-                dp[i][j] =
-                    Math.min(
-                        dp[i - 1][j] + 1,
-                        dp[i][j - 1] + 1,
-                        dp[i - 1][j - 1] + 1
-                    );
-            }
+    return [
+        {
+            type: "equal",
+            text: user
         }
-    }
-
-    const result = [];
-
-    let i = m;
-    let j = n;
-
-    while (i > 0 || j > 0) {
-
-        if (
-            i > 0 &&
-            j > 0 &&
-            correct[i - 1] === user[j - 1]
-        ) {
-
-            result.push({
-                type: "equal",
-                text: correct[i - 1]
-            });
-
-            i--;
-            j--;
-
-        } else if (
-            i > 0 &&
-            dp[i][j] === dp[i - 1][j] + 1
-        ) {
-
-            result.push({
-                type: "delete",
-                text: correct[i - 1]
-            });
-
-            i--;
-
-        } else if (
-            j > 0 &&
-            dp[i][j] === dp[i][j - 1] + 1
-        ) {
-
-            result.push({
-                type: "insert",
-                text: user[j - 1]
-            });
-
-            j--;
-
-        } else {
-
-            result.push({
-                type: "replace",
-                correctText:
-                    correct[i - 1] || "",
-                userText:
-                    user[j - 1] || ""
-            });
-
-            i--;
-            j--;
-        }
-    }
-
-    return mergeDiffs(
-        result.reverse()
-    );
-}
-
-function mergeDiffs(diffs) {
-
-    const merged = [];
-
-    for (const d of diffs) {
-
-        const last =
-            merged[merged.length - 1];
-
-        if (
-            !last ||
-            last.type !== d.type
-        ) {
-
-            merged.push({ ...d });
-
-            continue;
-        }
-
-        if (
-            d.type === "equal" ||
-            d.type === "delete" ||
-            d.type === "insert"
-        ) {
-
-            last.text += d.text;
-
-        } else if (
-            d.type === "replace"
-        ) {
-
-            last.correctText +=
-                d.correctText;
-
-            last.userText +=
-                d.userText;
-        }
-    }
-
-    return merged;
+    ];
 }
 
 function escapeHtml(str) {

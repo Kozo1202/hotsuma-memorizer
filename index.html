@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>『ほつまつたゑ』暗唱支援システム</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="./style.css?v=4">
+    <title>
+        『ほつまつたゑ』暗唱支援システム
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="./style.css?v=5"
+    >
 </head>
 
 <body>
 
     <h1>
         『ほつまつたゑ』暗唱支援システム
-        <span class="version">v1.0</span>
+
+        <span class="version">
+            v1.0
+        </span>
     </h1>
 
     <select id="ayaSelect"></select>
@@ -25,11 +38,17 @@
 
     <div class="button-row">
 
-        <button id="checkButton" type="button">
+        <button
+            id="checkButton"
+            type="button"
+        >
             判定
         </button>
 
-        <button id="clearButton" type="button">
+        <button
+            id="clearButton"
+            type="button"
+        >
             クリア
         </button>
 
@@ -41,7 +60,10 @@
 
     <h2>判定結果</h2>
 
-    <div id="userResult" class="result"></div>
+    <div
+        id="userResult"
+        class="result"
+    ></div>
 
     <!-- =========================
          使い方
@@ -49,47 +71,69 @@
 
     <details class="help-box">
 
-        <summary>このシステムについて</summary>
+        <summary>
+            このシステムについて
+        </summary>
 
         <div class="help-content">
 
             <h3>目的</h3>
 
             <p>
-                暗唱内容をより正確に保つための確認用システムです。
+                暗唱内容をより正確に保つための
+                確認用システムです。
             </p>
 
             <h3>使用条件</h3>
 
             <ul>
-                <li>ヲシテの読み書きができること</li>
-                <li>「つりたいのあや」までの暗唱を達成していること</li>
+
+                <li>
+                    ヲシテの読み書きが
+                    できること
+                </li>
+
+                <li>
+                    「つりたいのあや」までの
+                    暗唱を達成していること
+                </li>
+
             </ul>
 
             <h3>使い方</h3>
 
             <ol>
-                <li>試したいアヤを選択</li>
-
-                <li>試したい箇所を入力</li>
 
                 <li>
-                    Enterキーを2回連続で押す、
+                    試したいアヤを選択
+                </li>
+
+                <li>
+                    試したい箇所を入力
+                </li>
+
+                <li>
+                    Enterキーを
+                    2回連続で押す、
                     または［判定］を押す
                 </li>
 
                 <li>
-                    判定概要と判定位置が表示される
+                    判定概要と
+                    判定位置が表示される
                 </li>
 
                 <li>
-                    判定結果欄に詳細結果が表示される
+                    判定結果欄に
+                    詳細結果が表示される
                 </li>
+
             </ol>
 
             <h3>判定結果の見方</h3>
 
             <ul>
+
                 <li>
                     黒字：
                     正しく記憶している音
@@ -107,13 +151,16 @@
 
                 <li>
                     □＋括弧内の緑字：
-                    脱字。緑字が正しい音
+                    脱字。
+                    緑字が正しい音
                 </li>
+
             </ul>
 
             <p>
                 ［クリア］を押すと、
-                入力欄と判定結果が初期化されます。
+                入力欄と判定結果が
+                初期化されます。
             </p>
 
             <h3>備考</h3>
@@ -127,7 +174,7 @@
 
     </details>
 
-    <script src="./app.js?v=4"></script>
+    <script src="./app.js?v=5"></script>
 
 </body>
 </html>
