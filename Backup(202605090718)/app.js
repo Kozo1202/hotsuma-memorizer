@@ -1,7 +1,6 @@
 const ayaSelect = document.getElementById("ayaSelect");
 const inputText = document.getElementById("inputText");
 const checkButton = document.getElementById("checkButton");
-const clearButton = document.getElementById("clearButton");
 const status = document.getElementById("status");
 const positionInfo = document.getElementById("positionInfo");
 const userResult = document.getElementById("userResult");
@@ -15,10 +14,7 @@ initialize();
 async function initialize() {
   try {
     await loadAyaList();
-
     checkButton.addEventListener("click", compareText);
-    clearButton.addEventListener("click", clearInputAndResult);
-
   } catch (error) {
     showError(error);
   }
@@ -67,7 +63,12 @@ async function loadAyaContent(fileName) {
     targetLines = ayaData.lines || ayaData.行 || [];
   }
 
-  clearInputAndResult();
+  inputText.value = "";
+  status.innerHTML = "";
+  positionInfo.innerHTML = "";
+  userResult.innerHTML = "";
+
+  inputText.focus();
 }
 
 inputText.addEventListener("keydown", (e) => {
@@ -128,14 +129,6 @@ function compareText() {
   } catch (error) {
     showError(error);
   }
-}
-
-function clearInputAndResult() {
-  inputText.value = "";
-  status.innerHTML = "";
-  positionInfo.innerHTML = "";
-  userResult.innerHTML = "";
-  inputText.focus();
 }
 
 function findBestStartLine(userLines) {
@@ -297,3 +290,45 @@ function showError(error) {
   status.innerHTML = `<span class="ng">エラー: ${escapeHtml(error.message)}</span>`;
   console.error(error);
 }
+
+// 縦書き・横書き切換
+const writingModeButton = document.getElementById("writingModeButton");
+const textArea = document.getElementById("textArea");
+
+// 前回状態を復元
+const savedWritingMode = localStorage.getItem("writingMode");
+
+if (savedWritingMode === "vertical") {
+  textArea.classList.remove("horizontal-mode");
+  textArea.classList.add("vertical-mode");
+  writingModeButton.textContent = "横書きにする";
+} else {
+  textArea.classList.remove("vertical-mode");
+  textArea.classList.add("horizontal-mode");
+  writingModeButton.textContent = "縦書きにする";
+}
+
+writingModeButton.addEventListener("click", () => {
+
+  const isVertical =
+    textArea.classList.contains("vertical-mode");
+
+  if (isVertical) {
+
+    textArea.classList.remove("vertical-mode");
+    textArea.classList.add("horizontal-mode");
+
+    writingModeButton.textContent = "縦書きにする";
+
+    localStorage.setItem("writingMode", "horizontal");
+
+  } else {
+
+    textArea.classList.remove("horizontal-mode");
+    textArea.classList.add("vertical-mode");
+
+    writingModeButton.textContent = "横書きにする";
+
+    localStorage.setItem("writingMode", "vertical");
+  }
+});
