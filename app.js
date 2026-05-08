@@ -295,7 +295,16 @@ function findBestStartLine(userLines) {
 function normalizeForCompare(str) {
 
     return String(str)
-        .replaceAll("　", " ");
+
+        // 全角スペース統一
+        .replaceAll("　", " ")
+
+        // カタカナ → ひらがな
+        .replace(/[ァ-ン]/g, ch =>
+            String.fromCharCode(
+                ch.charCodeAt(0) - 0x60
+            )
+        );
 }
 
 function buildUserOnlyDiff(user, correct) {
