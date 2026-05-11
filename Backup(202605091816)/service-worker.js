@@ -1,10 +1,10 @@
-const CACHE_NAME = 'woshite-offline-v8';
+const CACHE_NAME = 'woshite-offline-v7';
 
 const CACHE_FILES = [
   './',
   './index.html',
-  './style.css?v=7',
-  './app.js?v=7',
+  './style.css?v=6',
+  './app.js?v=6',
   './manifest.webmanifest',
   './service-worker.js',
 
@@ -64,50 +64,77 @@ const CACHE_FILES = [
 ];
 
 self.addEventListener('install', event => {
+
   self.skipWaiting();
 
   event.waitUntil(
+
     caches.open(CACHE_NAME).then(async cache => {
+
       for (const file of CACHE_FILES) {
+
         try {
+
           await cache.add(file);
+
           console.log('Cached:', file);
+
         } catch (err) {
+
           console.error('Failed:', file, err);
         }
       }
+
     })
   );
 });
 
 self.addEventListener('activate', event => {
+
   event.waitUntil(
+
     caches.keys().then(keys => {
+
       return Promise.all(
+
         keys
           .filter(key => key !== CACHE_NAME)
           .map(key => caches.delete(key))
+
       );
+
     }).then(() => {
+
       return self.clients.claim();
+
     })
   );
 });
 
 self.addEventListener('fetch', event => {
+
   event.respondWith(
+
     fetch(event.request)
+
       .then(response => {
+
         const responseClone = response.clone();
 
         caches.open(CACHE_NAME).then(cache => {
+
           cache.put(event.request, responseClone);
+
         });
 
         return response;
+
       })
+
       .catch(() => {
+
         return caches.match(event.request);
+
       })
   );
 });

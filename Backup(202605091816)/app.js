@@ -90,7 +90,9 @@ inputText.addEventListener("keydown", (e) => {
 
     if (enterCount >= 2) {
         e.preventDefault();
+
         compareText();
+
         enterCount = 0;
         clearTimeout(enterTimer);
     }
@@ -159,6 +161,7 @@ function clearAll() {
     status.innerHTML = "";
     positionInfo.innerHTML = "";
     userResult.innerHTML = "";
+
     inputText.focus();
 }
 
@@ -200,7 +203,11 @@ function findBestStartLine(userLines) {
 
 function normalizeForCompare(str) {
     return String(str)
+
+        // 全角スペース統一
         .replaceAll("　", " ")
+
+        // カタカナ → ひらがな
         .replace(/[ァ-ン]/g, ch =>
             String.fromCharCode(
                 ch.charCodeAt(0) - 0x60
@@ -209,32 +216,25 @@ function normalizeForCompare(str) {
 }
 
 function buildUserOnlyDiff(user, correct) {
+    const diffs = diffChars(correct, user);
+
     let html = "";
 
-    const max =
-        Math.max(
-            user.length,
-            correct.length
-        );
+    for (const part of diffs) {
+        if (part.type === "equal") {
+            html += escapeHtml(part.text);
 
-    for (let i = 0; i < max; i++) {
-        const u = user[i] || "";
-        const c = correct[i] || "";
-
-        if (u === c) {
-            html += escapeHtml(u);
-
-        } else if (u === "") {
+        } else if (part.type === "delete") {
             html +=
-                `<span class="diff">□(<span style="color: green; font-weight: bold;">${escapeHtml(c)}</span>)</span>`;
+                `<span class="diff">□(<span style="color: green; font-weight: bold;">${escapeHtml(part.text)}</span>)</span>`;
 
-        } else if (c === "") {
+        } else if (part.type === "insert") {
             html +=
-                `<span class="diff">${escapeHtml(u)}(余分)</span>`;
+                `<span class="diff">${escapeHtml(part.text)}(余分)</span>`;
 
-        } else {
+        } else if (part.type === "replace") {
             html +=
-                `<span class="diff">${escapeHtml(u)}(<span style="color: green; font-weight: bold;">${escapeHtml(c)}</span>)</span>`;
+                `<span class="diff">${escapeHtml(part.userText)}(<span style="color: green; font-weight: bold;">${escapeHtml(part.correctText)}</span>)</span>`;
         }
     }
 
@@ -276,6 +276,129 @@ function levenshteinDistance(a, b) {
     }
 
     return dp[m][n];
+}
+
+function diffChars(correct, user) {
+    const m = correct.length;
+    const n = user.length;
+
+    const dp =
+        Array.from(
+            { length: m + 1 },
+            () => Array(n + 1).fill(0)
+        );
+
+    for (let i = 0; i <= m; i++) {
+        dp[i][0] = i;
+    }
+
+    for (let j = 0; j <= n; j++) {
+        dp[0][j] = j;
+    }
+
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (correct[i - 1] === user[j - 1]) {
+                dp[i][j] =
+                    dp[i - 1][j - 1];
+            } else {
+                dp[i][j] =
+                    Math.min(
+                        dp[i - 1][j] + 1,
+                        dp[i][j - 1] + 1,
+                        dp[i - 1][j - 1] + 1
+                    );
+            }
+        }
+    }
+
+    const result = [];
+
+    let i = m;
+    let j = n;
+
+    while (i > 0 || j > 0) {
+        if (
+            i > 0 &&
+            j > 0 &&
+            correct[i - 1] === user[j - 1]
+        ) {
+            result.push({
+                type: "equal",
+                text: correct[i - 1]
+            });
+
+            i--;
+            j--;
+
+        } else if (
+            i > 0 &&
+            dp[i][j] === dp[i - 1][j] + 1
+        ) {
+            result.push({
+                type: "delete",
+                text: correct[i - 1]
+            });
+
+            i--;
+
+        } else if (
+            j > 0 &&
+            dp[i][j] === dp[i][j - 1] + 1
+        ) {
+            result.push({
+                type: "insert",
+                text: user[j - 1]
+            });
+
+            j--;
+
+        } else {
+            result.push({
+                type: "replace",
+                correctText: correct[i - 1] || "",
+                userText: user[j - 1] || ""
+            });
+
+            i--;
+            j--;
+        }
+    }
+
+    return mergeDiffs(
+        result.reverse()
+    );
+}
+
+function mergeDiffs(diffs) {
+    const merged = [];
+
+    for (const d of diffs) {
+        const last =
+            merged[merged.length - 1];
+
+        if (
+            !last ||
+            last.type !== d.type
+        ) {
+            merged.push({ ...d });
+            continue;
+        }
+
+        if (
+            d.type === "equal" ||
+            d.type === "delete" ||
+            d.type === "insert"
+        ) {
+            last.text += d.text;
+
+        } else if (d.type === "replace") {
+            last.correctText += d.correctText;
+            last.userText += d.userText;
+        }
+    }
+
+    return merged;
 }
 
 function escapeHtml(str) {
